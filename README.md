@@ -1,7 +1,7 @@
 Everybody Dies
 ==============
 
-A simple 3/4 down 3d roguelike with preocedurally generated levels
+A simple 3/4 down 3d roguelike with procedurally generated levels
 
 
 Features
