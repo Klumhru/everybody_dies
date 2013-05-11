@@ -10,9 +10,9 @@ Features
 ## Level generator
 
 + Generate a square level based on tiles
-++ Create tile model
-++ Create generator code
-++ Create wall model
++ + Create tile model
++ + Create generator code
++ + Create wall model
 
 ## Camera control
 
@@ -25,4 +25,4 @@ Features
 + Place avatar in starting room
 + Select avatar by clicking on it
 + Give avatar orders by clicking on areas or actors
-++ Orders are contextual
++ + Orders are contextual
