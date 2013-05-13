@@ -36,3 +36,23 @@ class Room:
     def __repr__(self):
         return "<Room(%(id)s), pos(%(pos)s) W: %(width)s, H: %(height)s>" % \
             self.__dict__
+
+    @property
+    def top_edge(self):
+        return [[x, self.pos[1]]
+                for x in range(self.pos[0], self.pos[0] + self.width)]
+
+    @property
+    def bottom_edge(self):
+        return [[x, self.pos[1] + self.height - 1]
+                for x in range(self.pos[0], self.pos[0] + self.width)]
+
+    @property
+    def left_edge(self):
+        return [[self.pos[0], y]
+                for y in range(self.pos[1], self.pos[1] + self.height)]
+
+    @property
+    def right_edge(self):
+        return [[self.pos[0] + self.width - 1, y]
+                for y in range(self.pos[1], self.pos[1] + self.height)]

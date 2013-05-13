@@ -84,16 +84,38 @@ class GeneratorTests(unittest.TestCase):
 
 class TestRoom(unittest.TestCase):
     def setUp(self):
-        self.room = Room(id=10)
+        self.room = Room(id=3)
+        self.room.pos = [2, 2]
+        self.room.width = 3
+        self.room.height = 5
+        self.room.grid = [[0 for x in range(10)]
+                          for y in range(10)]
 
     def test_id(self):
-        self.assertEquals(self.room.id, 10)
+        self.assertEquals(self.room.id, 3)
 
     def test_pos(self):
-        self.assertEquals(self.room.pos, [0, 0])
+        self.assertEquals(self.room.pos, [2, 2])
 
     def test_grid(self):
-        self.assertEquals(len(self.room.grid), 0)
+        self.assertEquals(len(self.room.grid), 10)
+        self.assertEquals(len(self.room.grid[9]), 10)
+
+    def test_top_edge(self):
+        self.assertListEqual(self.room.top_edge,
+                             [[2, 2], [3, 2], [4, 2]])
+
+    def test_bottom_edge(self):
+        self.assertListEqual(self.room.bottom_edge,
+                             [[2, 6], [3, 6], [4, 6]])
+
+    def test_left_edge(self):
+        self.assertListEqual(self.room.left_edge,
+                             [[2, 2], [2, 3], [2, 4], [2, 5], [2, 6]])
+
+    def test_right_edge(self):
+        self.assertListEqual(self.room.right_edge,
+                             [[4, 2], [4, 3], [4, 4], [4, 5], [4, 6]])
 
     def tearDown(self):
         pass
