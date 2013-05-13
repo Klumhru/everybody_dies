@@ -10,24 +10,58 @@ from __future__ import unicode_literals, print_function, absolute_import
 
 import unittest
 
-from .level import LevelGenerator
+from .level import Level
+from .level_generator import LevelGenerator
 from .room import Room
+
+
+class LevelTests(unittest.TestCase):
+
+    def setUp(self):
+        self.generator = LevelGenerator(width=20,
+                                        height=20,
+                                        algorithm='rooms')
+        self.level = self.generator.generate()
+
+    def test_init(self):
+        level = Level(grid=None, rooms=None)
+        self.assertTrue(level is not None)
+
+    def test_dimensions(self):
+        self.assertTrue(self.level.width == 20)
+        self.assertTrue(self.level.height == 20)
+
+    def test_repr(self):
+        s = str(self.level)
+        print(s)
+        self.assertTrue(len(s) > self.level.width * self.level.height)
+
+    def tearDown(self):
+        self.level = None
+        self.generator = None
 
 
 class GeneratorTests(unittest.TestCase):
 
     def setUp(self):
-        self.level_gen = LevelGenerator(width=13, height=13, algorithm='rooms')
+        self.level_gen = LevelGenerator(width=20,
+                                        height=20,
+                                        algorithm='rooms')
+
+    def test_tile_types(self):
+        from .level_generator import tile_types
 
     def test_grid(self):
+        self.level_gen._init_grid(self.level_gen.height, self.level_gen.width)
         self.assertTrue(len(self.level_gen.grid) == self.level_gen.height)
         for row in self.level_gen.grid:
             self.assertTrue(len(row) == self.level_gen.width)
 
     def test_rooms(self):
-        self.assertTrue(self.level_gen.height == 13)
-        self.assertTrue(self.level_gen.width == 13)
-        self.level_gen.generate(rooms=10)
+        self.assertTrue(self.level_gen.height == 20)
+        self.assertTrue(self.level_gen.width == 20)
+        level = self.level_gen.generate(rooms=10)
+        self.assertGreater(len(level.rooms), 0)
 
     def tearDown(self):
         self.level_gen = None
