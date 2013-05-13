@@ -48,6 +48,6 @@ class Level:
             rowcount += 1
             s += str(rowcount).rjust(2) + ' '
             for tile in row:
-                s += str(tile).rjust(2, b' ') if tile != 0 else '  '
+                s += str(tile).rjust(2, b'0') if tile != 0 else '  '
             s += '\n'
         return s

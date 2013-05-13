@@ -101,8 +101,8 @@ class LevelGenerator():
     def _place_room(self, room):
         """Find a position in the grid with enough
         empty tiles to hold the room"""
-        pos = [random.randint(0, self.width - room.width),
-               random.randint(0, self.height - room.height)]
+        pos = [random.randint(1, self.width - room.width - 1),
+               random.randint(1, self.height - room.height - 1)]
         for y in range(pos[1], pos[1] + room.height):
             for x in range(pos[0], pos[0] + room.width):
                 # if the tile value is not 0 there is a room there

@@ -9,10 +9,25 @@ Unit tests for level generation
 from __future__ import unicode_literals, print_function, absolute_import
 
 import unittest
+import math
 
 from .level import Level
 from .level_generator import LevelGenerator
 from .room import Room
+
+import utils2d
+
+
+class Utils2dTests(unittest.TestCase):
+
+    def test_distancesqr(self):
+        self.assertEqual(utils2d.distancesqr(2, 2), 8)
+
+    def test_distancesqrt(self):
+        expected = math.sqrt(18)
+        # Couldn't be bothered finding a
+        # number that would match sqrt(pow()+po())
+        self.assertEqual(utils2d.distancesqrt(3, 3), expected)
 
 
 class LevelTests(unittest.TestCase):
