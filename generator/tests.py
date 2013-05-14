@@ -102,20 +102,60 @@ class TestRoom(unittest.TestCase):
         self.assertEquals(len(self.room.grid[9]), 10)
 
     def test_top_edge(self):
+        """
+        Check if the top edge matches expected results
+        XXX
+        O O
+        O O
+        O O
+        OOO
+        """
         self.assertListEqual(self.room.top_edge,
                              [[2, 2], [3, 2], [4, 2]])
 
     def test_bottom_edge(self):
+        """
+        Check if the bottom edge matches expected results
+        OOO
+        O O
+        O O
+        O O
+        XXX
+        """
         self.assertListEqual(self.room.bottom_edge,
                              [[2, 6], [3, 6], [4, 6]])
 
     def test_left_edge(self):
+        """
+        Check if the left edge matches expected results
+        XOO
+        X O
+        X O
+        X O
+        XOO
+        """
         self.assertListEqual(self.room.left_edge,
-                             [[2, 2], [2, 3], [2, 4], [2, 5], [2, 6]])
+                             [[2, 2],
+                             [2, 3],
+                             [2, 4],
+                             [2, 5],
+                             [2, 6]])
 
     def test_right_edge(self):
+        """
+        Check if the right edge matches expected results
+        OOX
+        O X
+        O X
+        O X
+        OOX
+        """
         self.assertListEqual(self.room.right_edge,
-                             [[4, 2], [4, 3], [4, 4], [4, 5], [4, 6]])
+                             [[4, 2],
+                             [4, 3],
+                             [4, 4],
+                             [4, 5],
+                             [4, 6]])
 
     def tearDown(self):
         pass
