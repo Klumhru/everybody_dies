@@ -121,10 +121,39 @@ class LevelGenerator():
         :returns new Room instance:
         """
 
-        room = Room(id=id, grid=self.grid)
+        room = Room(id=id, grid=self.grid, generator=self)
         room.make(self.grid)
         return room
 
     def _init_grid(self, height, width):
+        """Initializes self.grid with a 2d grid defined by height and width"""
         self.grid = [[0 for x in range(width)]
                      for y in range(height)]
+
+    def _flood_rooms(self, rooms):
+        """
+        Finds all rooms connected to the rooms in the array and adds them
+        to the array
+        """
+        new = []
+        for room in rooms:
+            for room1 in self.get_connected_rooms(room):
+                if room1 in new:
+                    continue
+                new.append(room1)
+        for n in new:
+            rooms.append(n)
+
+    def get_room(self, id):
+        for room in self.rooms:
+            if room.id == id:
+                return room
+        return None
+
+    def get_connected_rooms(self, room):
+        ret = []
+        # Get adjoining rooms
+        for r in room.neighbours:
+            ret.append(r)
+        # Traverse hallways to connected rooms
+        return ret
