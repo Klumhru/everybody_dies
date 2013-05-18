@@ -21,6 +21,8 @@ class Level:
         """This is a level, with a ready grid"""
         self.grid = grid or []
         self.rooms = rooms or []
+        for room in self.rooms:
+            room.level = self
 
     @property
     def width(self):
@@ -36,6 +38,12 @@ class Level:
                                                     len(self.rooms))
         s += self.grid_repr(self.grid)
         return s
+
+    def get_room(self, id):
+        for room in self.rooms:
+            if room.id == id:
+                return room
+        return None
 
     @classmethod
     def grid_repr(cls, grid):
