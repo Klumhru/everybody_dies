@@ -20,10 +20,11 @@ def distancesqrt(p1, p2):
 
 def average(a):
     """Calculate the average position of an array of points"""
-    if not len(a):
+    if not a or not len(a):
         return [0, 0]
     ret = [0, 0]
     for p in a:
         ret[0] += p[0]
         ret[1] += p[1]
-    return [ret[0] / len(a), ret[1] / len(a)]
+    return [ret[0] / len(a),
+            ret[1] / len(a)]
