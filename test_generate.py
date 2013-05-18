@@ -15,6 +15,9 @@ from generator.level_generator import LevelGenerator
 
 if __name__ == '__main__':
 
-    gen = LevelGenerator(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3])
+    gen = LevelGenerator(int(sys.argv[1]),
+                         int(sys.argv[2]),
+                         sys.argv[3],
+                         seed=123)
     level = gen.generate(rooms=int(sys.argv[4]))
     print(level)
