@@ -15,12 +15,14 @@ from random import randint
 
 class Room:
 
-    def __init__(self, id=None, grid=None):
+    def __init__(self, id=None, grid=None, generator=None):
         """Creates a room and sets defaults"""
 
         self.id = id or 0
         self.pos = [0, 0]
         self.grid = grid or []
+        self.generator = generator
+        self.level = None
 
     def make(self, grid):
         """Create the room within the given grid
@@ -37,11 +39,37 @@ class Room:
         return "<Room(%(id)s), pos(%(pos)s) W: %(width)s, H: %(height)s>" % \
             self.__dict__
 
-    def get_connected_rooms(self):
-        # Get adjoining rooms
+    @property
+    def neighbours(self):
+        ret = []
+        for border in self.borders:
+            for pos in border:
+                room = self.level.get_room(self.grid[pos[0]][pos[1]])
+                if room and not room in ret:
+                    ret.append(room)
+        return ret
 
-        # Traverse hallways to connected rooms
-        pass
+    @property
+    def floor_tiles(self):
+        ret = []
+        for y in range(self.pos[1], self.pos[1] + self.height):
+            for x in range(self.pos[0], self.pos[0] + self.width):
+                ret.append([x, y])
+        return ret
+
+    @property
+    def edges(self):
+        return [self.top_edge,
+                self.right_edge,
+                self.bottom_edge,
+                self.left_edge]
+
+    @property
+    def borders(self):
+        return [self.top_border,
+                self.right_border,
+                self.bottom_border,
+                self.left_border]
 
     @property
     def top_border(self):
