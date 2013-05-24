@@ -1,3 +1,4 @@
 everybody_dies.sublime-workspace
 .coverage
 *.pyc
+.idea

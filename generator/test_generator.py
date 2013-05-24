@@ -36,6 +36,12 @@ class GeneratorTests(unittest.TestCase):
         for row in self.level_gen.grid:
             self.assertTrue(len(row) == self.level_gen.width)
 
+    def test_get_start_room(self):
+        room = self.level_gen._get_start_room()
+        self.assertEqual(room.id, 15)
+        get_room = self.level_gen.get_room(15)
+        self.assertEqual(room, get_room)
+
     def test_rooms(self):
         self.assertTrue(self.level_gen.height == 20)
         self.assertTrue(self.level_gen.width == 20)
@@ -43,7 +49,7 @@ class GeneratorTests(unittest.TestCase):
         room1 = self.level.get_room(1)
         self.assertIsNotNone(room1)
 
-    def test_neighbours(self):
+    def test_room_neighbours(self):
         room15 = self.level.get_room(15)
         self.assertIsNotNone(room15)
         adjoining = [self.level.get_room(6),
@@ -52,8 +58,27 @@ class GeneratorTests(unittest.TestCase):
         for r in adjoining:
             self.assertTrue(r in room15.neighbours)
 
+        room3 = self.level.get_room(3)
+        self.assertIsNotNone(room3)
+        adjoining = [self.level.get_room(2),
+                     self.level.get_room(9)]
+        for r in adjoining:
+            self.assertTrue(r in room3.neighbours)
+        self.assertListEqual(room3.neighbours, adjoining)
+
     def test_flood_rooms(self):
-        v = self.level_gen._flood_rooms(self.level_gen.rooms[:1])
+        flooded = [self.level_gen._get_start_room()]
+        dry = [r for r in self.level_gen.rooms if r not in flooded]
+
+        self.assertListEqual(flooded, [self.level_gen.get_room(15)])
+
+        self.level_gen._flood_rooms(flooded, dry)
+        self.assertEqual(len(flooded), 7)
+        self.assertEqual(len(dry), 8)
+
+        # Ids for the rooms that should be flooded after first go
+        expected = [1, 2, 3, 6, 9, 10, 15]
+        self.assertListEqual(expected, sorted([r.id for r in flooded]))
 
     def tearDown(self):
         self.level_gen = None

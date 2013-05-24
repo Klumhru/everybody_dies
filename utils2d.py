@@ -10,7 +10,9 @@ from math import sqrt, pow
 
 def distancesqr(p1, p2):
     """Calculate the squared distance between two points"""
-    return pow(p1, 2) + pow(p2, 2)
+    rel = [p1[0] - p2[0],
+           p1[1] - p2[1]]
+    return pow(rel[0], 2) + pow(rel[1], 2)
 
 
 def distancesqrt(p1, p2):

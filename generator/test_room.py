@@ -37,13 +37,13 @@ class TestRoom(unittest.TestCase):
         self.assertEquals(len(self.room.grid), 10)
         self.assertEquals(len(self.room.grid[9]), 10)
 
-    def test_floor_tiles(self):
+    def test_tiles(self):
         expected = [[2, 2], [3, 2], [4, 2],
                     [2, 3], [3, 3], [4, 3],
                     [2, 4], [3, 4], [4, 4],
                     [2, 5], [3, 5], [4, 5],
                     [2, 6], [3, 6], [4, 6]]
-        self.assertListEqual(self.room.floor_tiles, expected)
+        self.assertListEqual(self.room.tiles, expected)
 
     def test_edges(self):
         self.assertEquals(len(self.room.edges), 4)
@@ -63,6 +63,18 @@ class TestRoom(unittest.TestCase):
         self.assertListEqual(self.room.top_edge,
                              [[2, 2], [3, 2], [4, 2]])
 
+    def test_top_border(self):
+        """
+        XXX
+        OOO
+        O O
+        O O
+        O O
+        OOO
+        """
+        self.assertListEqual(self.room.top_border,
+                             [[2, 1], [3, 1], [4, 1]])
+
     def test_bottom_edge(self):
         """
         Check if the bottom edge matches expected results
@@ -74,6 +86,18 @@ class TestRoom(unittest.TestCase):
         """
         self.assertListEqual(self.room.bottom_edge,
                              [[2, 6], [3, 6], [4, 6]])
+
+    def test_bottom_border(self):
+        """
+        OOO
+        O O
+        O O
+        O O
+        OOO
+        XXX
+        """
+        self.assertListEqual(self.room.bottom_border,
+                             [[2, 7], [3, 7], [4, 7]])
 
     def test_left_edge(self):
         """
@@ -91,6 +115,21 @@ class TestRoom(unittest.TestCase):
                              [2, 5],
                              [2, 6]])
 
+    def test_left_border(self):
+        """
+        XOOO
+        XO O
+        XO O
+        XO O
+        XOOO
+        """
+        self.assertListEqual(self.room.left_border,
+                             [[1, 2],
+                             [1, 3],
+                             [1, 4],
+                             [1, 5],
+                             [1, 6]])
+
     def test_right_edge(self):
         """
         Check if the right edge matches expected results
@@ -106,6 +145,21 @@ class TestRoom(unittest.TestCase):
                              [4, 4],
                              [4, 5],
                              [4, 6]])
+
+    def test_right_border(self):
+        """
+        OOOX
+        O OX
+        O OX
+        O OX
+        OOOX
+        """
+        self.assertListEqual(self.room.right_border,
+                             [[5, 2],
+                             [5, 3],
+                             [5, 4],
+                             [5, 5],
+                             [5, 6]])
 
     def tearDown(self):
         pass

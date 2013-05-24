@@ -10,6 +10,8 @@ from __future__ import unicode_literals, print_function, absolute_import
 
 import random
 
+import utils2d
+
 from .level import Level
 from .room import Room
 
@@ -71,6 +73,7 @@ class LevelGenerator():
 
         self.rooms = [self._create_room(i) for i in range(1, rooms + 1)]
         self._place_rooms()
+        self._connect_rooms()
 
     def _place_rooms(self):
         """Randomly place rooms within a grid"""
@@ -89,6 +92,16 @@ class LevelGenerator():
         while len([r for r in self.rooms if r.id in not_placed]):
             self.rooms.remove([r for r in self.rooms
                               if r.id in not_placed][0])
+
+    def _connect_rooms(self):
+        unconnected_rooms = self.rooms
+        connected_rooms = [self._get_start_room()]
+
+    def _get_start_room(self):
+        key_func = lambda r: utils2d.distancesqr([0, 0],
+                                                 utils2d.average(r.tiles))
+        return sorted(self.rooms,
+                      key=key_func)[0]
 
     def _mark_room(self, room):
         for y in range(room.pos[1], room.pos[1] + room.height):
@@ -130,19 +143,25 @@ class LevelGenerator():
         self.grid = [[0 for x in range(width)]
                      for y in range(height)]
 
-    def _flood_rooms(self, rooms):
+    def _flood_rooms(self, flooded, dry):
         """
-        Finds all rooms connected to the rooms in the array and adds them
-        to the array
+        Finds all rooms connected to the romms in the array and adds them
+        to the array and removes them from dry
         """
-        new = []
-        for room in rooms:
-            for room1 in self.get_connected_rooms(room):
-                if room1 in new:
-                    continue
-                new.append(room1)
-        for n in new:
-            rooms.append(n)
+        updated = []
+
+        for room in flooded:
+            for connected in self.get_connected_rooms(room):
+                if connected not in updated and connected not in flooded:
+                    updated.append(connected)
+
+        if len(updated):
+            for room in updated:
+                if room in dry:
+                    dry.remove(room)
+                if room not in flooded:
+                    flooded.append(room)
+            self._flood_rooms(flooded, dry)
 
     def get_room(self, id):
         for room in self.rooms:

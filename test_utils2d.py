@@ -17,13 +17,13 @@ import utils2d
 class Utils2dTests(unittest.TestCase):
 
     def test_distancesqr(self):
-        self.assertEqual(utils2d.distancesqr(2, 2), 8)
+        self.assertEqual(utils2d.distancesqr([0, 0], [2, 2]), 8)
 
     def test_distancesqrt(self):
         expected = math.sqrt(18)
         # Couldn't be bothered finding a
         # number that would match sqrt(pow()+pow())
-        self.assertEqual(utils2d.distancesqrt(3, 3), expected)
+        self.assertEqual(utils2d.distancesqrt([0, 0], [3, 3]), expected)
 
     def test_average(self):
         expected = [2, 2]

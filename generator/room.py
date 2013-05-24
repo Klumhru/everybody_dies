@@ -44,13 +44,13 @@ class Room:
         ret = []
         for border in self.borders:
             for pos in border:
-                room = self.level.get_room(self.grid[pos[0]][pos[1]])
+                room = self.level.get_room(self.grid[pos[1]][pos[0]])
                 if room and not room in ret:
                     ret.append(room)
         return ret
 
     @property
-    def floor_tiles(self):
+    def tiles(self):
         ret = []
         for y in range(self.pos[1], self.pos[1] + self.height):
             for x in range(self.pos[0], self.pos[0] + self.width):

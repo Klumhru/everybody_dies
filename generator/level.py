@@ -50,12 +50,12 @@ class Level:
         s = '   ' + ''.join([str(i).ljust(20)
                             for i in range(0, len(grid[0]), 10)]) + '\n'
         s += '   ' + ' '.join(['%s' % (i % 10)
-                               for i in range(1, len(grid[0]) + 1)]) + '\n'
+                               for i in range(0, len(grid[0]) + 1)]) + '\n'
         rowcount = 0
         for row in grid:
-            rowcount += 1
             s += str(rowcount).rjust(2) + ' '
             for tile in row:
                 s += str(tile).rjust(2, b'0') if tile != 0 else '  '
             s += '\n'
+            rowcount += 1
         return s
